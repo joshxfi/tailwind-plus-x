@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { execSync } from 'child_process';
-import path from 'path';
-import colors from 'colors';
-import fs from 'fs';
+const { execSync } = require('child_process');
+const path = require('path');
+const colors = require('colors');
+const fs = require('fs');
 
 if (process.argv.length < 3) {
   console.log(colors.red('\n⩺ You forgot to name your project.'));
