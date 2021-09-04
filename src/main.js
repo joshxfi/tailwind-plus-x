@@ -7,8 +7,7 @@ const fs = require('fs');
 
 if (process.argv.length < 3) {
   console.log(colors.red('\n→ You forgot to name your project.'));
-  console.log('\nExample:'.green);
-  console.log('└─ npx vr2t my-app'.green);
+  console.log('\nExample:'.green, '└─ npx vr2t my-app'.yellow);
   process.exit(1);
 }
 
@@ -37,12 +36,14 @@ const main = async () => {
 
     process.chdir(projectPath);
 
-    console.log('→ Removing the remote repository...'.red);
+    console.log('\n→ Removing the remote repository...'.red);
     execSync('npx rimraf ./.git');
 
     console.log('\n[ Installed Successfully! ]'.bold.green);
 
-    console.log('\n→ Install the dependencies & run the dev server'.magenta)
+    console.log('\n→ Install the dependencies & run the dev server.'.magenta)
+
+    console.log(`\ncd ${projectName}`.yellow);
 
     console.log('\nfor yarn:'.green, '\n├─ yarn or yarn install\n└─ yarn dev'.yellow);
     console.log('\nfor npm:'.green, '\n├─ npm i or npm install\n└─ npm run dev'.yellow);
