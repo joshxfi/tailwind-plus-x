@@ -1,0 +1,15 @@
+{
+  "name": "vr2t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bin": {
+    "vr2t": "./main.js"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
