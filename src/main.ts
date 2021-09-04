@@ -6,9 +6,9 @@ import colors from 'colors';
 import fs from 'fs';
 
 if (process.argv.length < 3) {
-  console.log('\n⩺ You forgot to name your project.'.red);
-  console.log('\n⩺ example ↴'.brightGreen);
-  console.log('⩺ npx vr2t my-app'.brightGreen);
+  console.log(colors.red('\n⩺ You forgot to name your project.'));
+  console.log('\n⩺ example ↴'.green);
+  console.log('⩺ npx vr2t my-app'.green);
   process.exit(1);
 }
 
@@ -40,7 +40,7 @@ const main = async () => {
     console.log('\n⩺ Installing dependencies...'.bgYellow.black);
     execSync('yarn install');
 
-    console.log('\n⩺ Removing unnecessary files...'.bgBrightRed.black);
+    console.log('\n⩺ Removing unnecessary files...'.red.black);
     execSync('npx rimraf ./.git');
 
     console.log(
