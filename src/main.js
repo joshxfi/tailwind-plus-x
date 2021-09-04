@@ -6,9 +6,9 @@ const colors = require('colors');
 const fs = require('fs');
 
 if (process.argv.length < 3) {
-  console.log(colors.red('\n⩺ You forgot to name your project.'));
-  console.log('\n⩺ example ↴'.green);
-  console.log('⩺ npx vr2t my-app'.green);
+  console.log(colors.red('\n→ You forgot to name your project.'));
+  console.log('\nExample:'.green);
+  console.log('└─ npx vr2t my-app'.green);
   process.exit(1);
 }
 
@@ -32,21 +32,21 @@ try {
 
 const main = async () => {
   try {
-    console.log('\n⩺ Downloading files...'.bgGreen.black);
+    console.log('\n→ Downloading files...'.green);
     execSync(`git clone --depth 1 ${gitRepo} ${projectPath}`);
 
     process.chdir(projectPath);
 
-    console.log('\n⩺ Installing dependencies...'.bgYellow.black);
-    execSync('yarn install');
-
-    console.log('\n⩺ Removing unnecessary files...'.red.black);
+    console.log('→ Removing the remote repository...'.red);
     execSync('npx rimraf ./.git');
 
-    console.log(
-      '\n⩺ The installation is complete!\n⩺ cd your-project-name\n⩺ yarn dev'
-        .green.bold
-    );
+    console.log('\n[ Installed Successfully! ]'.bold.green);
+
+    console.log('\n→ Install the dependencies & run the dev server'.magenta)
+
+    console.log('\nfor yarn:'.green, '\n├─ yarn or yarn install\n└─ yarn dev'.yellow);
+    console.log('\nfor npm:'.green, '\n├─ npm i or npm install\n└─ npm run dev'.yellow);
+    
   } catch (err) {
     console.log(err);
   }
