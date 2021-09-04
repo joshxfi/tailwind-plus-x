@@ -1,19 +1,32 @@
 {
   "name": "vr2t",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "keywords": [],
-  "author": "",
+  "description": "A boilerplate for Vite.js, React TypeScript, & Tailwind CSS",
+  "main": "./dist/main.js",
+  "keywords": [
+    "vr2t",
+    "boilerplate",
+    "vite.js",
+    "react.js",
+    "typescript",
+    "tailwind css"
+  ],
+  "author": "Josh Daniel Bañares",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "bugs": {
+    "url": "https://github.com/joshxfi/vr2t-generator/issues"
+  },
+  "homepage": "https://github.com/joshxfi/vr2t-generator",
   "bin": {
-    "vr2t": "./src/main.js"
+    "vr2t": "./dist/main.js"
   },
   "dependencies": {
     "colors": "^1.4.0"
   },
   "devDependencies": {
-    "@types/colors": "^1.2.1",
     "@types/node": "^16.7.10",
     "typescript": "^4.4.2"
   }
