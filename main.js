@@ -2,12 +2,13 @@
 
 const { execSync } = require('child_process');
 const path = require('path');
+const colors = require('colors')
 const fs = require('fs');
 
 if (process.argv.length < 3) {
-    console.log('\nYou have to provide a name to your app.');
-    console.log('\n[ for example ]');
-    console.log('npx create-my-boilerplate my-app');
+    console.log('\n⩺ You forgot to name your project.'.red);
+    console.log('\n⩺ example ↴'.brightGreen);
+    console.log('⩺ npx vr2t my-app'.brightGreen);
     process.exit(1);
 }
 
@@ -19,26 +20,25 @@ const gitRepo = 'https://github.com/joshxfi/vr2t-boilerplate.git';
 try {
     fs.mkdirSync(projectPath);
 } catch (err) {
-    err.code === 'EEXIST' ? console.log(`The file ${projectName} already exists, please use a different name for your project.`) : console.log(err)
+    err.code === 'EEXIST' ? console.log(`\nThe folder ${projectName} already exists, please use a different name for your project.`.red) : console.log(err)
 
     process.exit(1);
 }
 
 const main = async () => {
     try {
-        console.log('Downloading files...');
-        // execSync(`git clone --depth 1 ${gitRepo} ${projectPath}`);
+        console.log('\n⩺ Downloading files...'.bgGreen.black);
+        execSync(`git clone --depth 1 ${gitRepo} ${projectPath}`);
 
         process.chdir(projectPath);
 
-        console.log('Installing dependencies...');
-        // execSync('yarn install');
+        console.log('\n⩺ Installing dependencies...'.bgYellow.black);
+        execSync('yarn install');
 
-        console.log('Removing unnecessary files...');
-        // execSync('npx rimraf ./.git');
-        // fs.rmdirSync(path.join(projectPath, 'bin'), { recursive: true });
+        console.log('\n⩺ Removing unnecessary files...'.bgBrightRed.black);
+        execSync('npx rimraf ./.git');
 
-        console.log('The installation is complete.');
+        console.log('\n⩺ The installation is complete!\n⩺ cd your-project-name\n⩺ yarn dev'.green.bold);
     } catch (err) {
         console.log(err)
     }
