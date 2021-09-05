@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./lib",
     "moduleResolution": "node",
     "removeComments": true,

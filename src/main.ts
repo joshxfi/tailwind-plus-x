@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { execSync } from 'child_process';
 import path from 'path';
 import colors from 'colors';
@@ -24,7 +22,7 @@ try {
 } catch (err) {
   err.code === 'EEXIST'
     ? console.log(
-        `\nThe folder ${projectName} already exists, please use a different name for your project.`
+        `\n→ The folder ${projectName} already exists, please use a different name for your project.`
           .red
       )
     : console.log(err);
@@ -40,14 +38,14 @@ const main = async () => {
     process.chdir(projectPath);
 
     console.log('\n→ Removing the remote repository...'.red);
-    execSync('npx rimraf ./.git');
-    
+    execSync('npx rimraf .git');
+
     console.log('\n→ Installing the dependencies...'.yellow);
     if (pmFlag === '--npm') {
-      console.log('detected --npm flag, installing with npm...'.gray);
+      console.log('→ Detected --npm flag, installing with npm...'.gray);
       execSync('npm i');
     } else {
-      console.log('no flag detected, installing with yarn...'.gray);
+      console.log('→ No flag detected, installing with yarn...'.gray);
       execSync('yarn');
     }
 
@@ -57,16 +55,11 @@ const main = async () => {
 
     console.log(`\ncd ${projectName}`.yellow);
 
-    console.log(
-      '\nfor yarn:'.green,
-      '\n├─ yarn or yarn install\n└─ yarn dev'.yellow
-    );
-    console.log(
-      '\nfor npm:'.green,
-      '\n├─ npm i or npm install\n└─ npm run dev'.yellow
-    );
+    console.log('\nfor yarn:'.green, '\n└─ yarn dev'.yellow);
+    console.log('\nfor npm:'.green, '\n└─ npm run dev'.yellow);
   } catch (err) {
     console.log(err);
   }
 };
+
 main();
