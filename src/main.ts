@@ -7,14 +7,14 @@ import fs from 'fs';
 
 if (process.argv.length < 3) {
   console.log(colors.red('\n→ You forgot to name your project.'));
-  console.log('\nExample:'.green, '└─ npx vr2t my-app'.yellow);
+  console.log('\nExample:'.green, '\n└─ npx vr2t my-app'.yellow);
   process.exit(1);
 }
 
-const projectName = process.argv[2];
-const currentPath = process.cwd();
-const projectPath = path.join(currentPath, projectName);
-const gitRepo = 'https://github.com/joshxfi/vr2t-boilerplate.git';
+const projectName: string = process.argv[2];
+const currentPath: string = process.cwd();
+const projectPath: string = path.join(currentPath, projectName);
+const gitRepo: string = 'https://github.com/joshxfi/vr2t-boilerplate.git';
 
 try {
   fs.mkdirSync(projectPath);
