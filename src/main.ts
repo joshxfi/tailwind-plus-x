@@ -16,6 +16,9 @@ const currentPath: string = process.cwd();
 const projectPath: string = path.join(currentPath, projectName);
 const gitRepo: string = 'https://github.com/joshxfi/vr2t-boilerplate.git';
 
+// package manager flag -> ex: --npm
+const pmFlag: string = process.argv[3];
+
 try {
   fs.mkdirSync(projectPath);
 } catch (err) {
@@ -38,10 +41,19 @@ const main = async () => {
 
     console.log('\n→ Removing the remote repository...'.red);
     execSync('npx rimraf ./.git');
+    
+    console.log('\n→ Installing the dependencies...'.yellow);
+    if (pmFlag === '--npm') {
+      console.log('detected --npm flag, installing with npm...'.gray);
+      execSync('npm i');
+    } else {
+      console.log('no flag detected, installing with yarn...'.gray);
+      execSync('yarn');
+    }
 
     console.log('\n[ Installed Successfully! ]'.green.bold);
 
-    console.log('\n→ Install the dependencies & run the dev server.'.magenta);
+    console.log('\n→ cd to your project & run the dev server.'.magenta);
 
     console.log(`\ncd ${projectName}`.yellow);
 
