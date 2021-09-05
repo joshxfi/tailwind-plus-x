@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
-const path = require('path');
-const colors = require('colors');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import path from 'path';
+import colors from 'colors';
+import fs from 'fs';
 
 if (process.argv.length < 3) {
   console.log(colors.red('\n→ You forgot to name your project.'));
@@ -39,15 +39,20 @@ const main = async () => {
     console.log('\n→ Removing the remote repository...'.red);
     execSync('npx rimraf ./.git');
 
-    console.log('\n[ Installed Successfully! ]'.bold.green);
+    console.log('\n[ Installed Successfully! ]'.green.bold);
 
-    console.log('\n→ Install the dependencies & run the dev server.'.magenta)
+    console.log('\n→ Install the dependencies & run the dev server.'.magenta);
 
     console.log(`\ncd ${projectName}`.yellow);
 
-    console.log('\nfor yarn:'.green, '\n├─ yarn or yarn install\n└─ yarn dev'.yellow);
-    console.log('\nfor npm:'.green, '\n├─ npm i or npm install\n└─ npm run dev'.yellow);
-    
+    console.log(
+      '\nfor yarn:'.green,
+      '\n├─ yarn or yarn install\n└─ yarn dev'.yellow
+    );
+    console.log(
+      '\nfor npm:'.green,
+      '\n├─ npm i or npm install\n└─ npm run dev'.yellow
+    );
   } catch (err) {
     console.log(err);
   }
