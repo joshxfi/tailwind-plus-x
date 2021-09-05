@@ -1,4 +1,5 @@
 src
-node_modules
 LICENSE
+.gitignore
+node_modules
 tsconfig.json
