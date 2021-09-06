@@ -1,5 +1,6 @@
 src
 LICENSE
 .gitignore
+.prettierrc
 node_modules
 tsconfig.json
