@@ -9,13 +9,19 @@ VR2T [ *VR-TT* ] stands for [Vite](https://github.com/vitejs/vite) - [React](htt
 
 ## Installation
 ```shell
-npx vr2t <project-name>
+npx vr2t
 ```
-- Replace the `<project-name>` with the title of your project.
+---
+- You can also directly specify the project name.
+- Replace the `project-name` with the title of your project —
+```shell
+npx vr2t project-name
+```
+---
 - VR2T uses yarn as default to install dependencies.
 - If you want to use npm instead of yarn —
 ```shell
-npx vr2t <project-name> --npm
+npx vr2t project-name --npm
 ```
 ---
 ```js
