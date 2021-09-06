@@ -111,9 +111,11 @@ const cloneBoilerplate = async ({
 
     console.log(colors.green.bold('\n  [ Installed Successfully! ]'));
     console.log('\n→ cd to your project & run the dev server.'.magenta);
+
     console.log(colors.yellow(`\ncd ${projectName}`));
-    console.log(colors.green('\nfor yarn:'), colors.yellow('\n└─ yarn dev'));
-    console.log(colors.green('\nfor npm:'), colors.yellow('\n└─ npm run dev'));
+
+    if (useNpm) console.log(colors.yellow('npm run dev'));
+    else console.log(colors.yellow('yarn dev'));
   } catch (err) {
     console.log(err);
   }
