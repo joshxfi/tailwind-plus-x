@@ -18,8 +18,8 @@ npx vr2t
 npx vr2t project-name
 ```
 ---
-- VR2T uses yarn as default to install dependencies.
-- If you want to use npm instead of yarn —
+- VR2T uses `yarn` as default to install dependencies.
+- If you want to use `npm` instead of `yarn` —
 ```shell
 npx vr2t project-name --npm
 ```
