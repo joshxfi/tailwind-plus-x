@@ -76,7 +76,7 @@ const cloneBoilerplate = async ({
   projectName,
   useNpm,
 }: CloneBoilerplateProps) => {
-  const projectPath: string = path.join(__dirname, projectName);
+  const projectPath: string = path.join(process.cwd(), projectName);
   const gitRepo = "https://github.com/joshxfi/vr2t-boilerplate.git";
 
   try {
