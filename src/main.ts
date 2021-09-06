@@ -84,7 +84,7 @@ const cloneBoilerplate = async ({
   } catch (err) {
     err.code === 'EEXIST'
       ? console.log(
-          `\n  → The folder ${projectName} already exists, please use a different name for your project.`
+          `\n→ The folder ${projectName} already exists, please use a different name for your project.`
             .red
         )
       : console.log(err);
@@ -97,15 +97,15 @@ const cloneBoilerplate = async ({
 
     process.chdir(projectPath);
 
-    console.log(colors.red('\n→ Removing the remote repository...'));
-    execSync('npx rimraf .git');
+    // this will remove the remote repository
+    execSync('git remote remove origin');
 
     console.log(colors.yellow('\n→ Installing the dependencies...'));
     if (useNpm) {
-      console.log(colors.gray('→ installing with npm...'));
+      console.log(colors.gray('→ Installing with npm...'));
       execSync('npm i', { stdio: 'inherit' });
     } else {
-      console.log(colors.gray('→ installing with yarn...'));
+      console.log(colors.gray('→ Installing with yarn...'));
       execSync('yarn', { stdio: 'inherit' });
     }
 
