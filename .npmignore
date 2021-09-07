@@ -1,5 +1,6 @@
 src
 LICENSE
+.github
 .gitignore
 .prettierrc
 node_modules
