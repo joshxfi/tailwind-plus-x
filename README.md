@@ -7,6 +7,36 @@ VR2T [ *VR-TT* ] stands for [Vite](https://github.com/vitejs/vite) - [React](htt
 ![](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
+## Why Use VR2T?
+- Without VR2T, setting up a project would be:
+```shell
+$ yarn create vite my-project --template react-ts
+$ cd my-project
+$ yarn install
+$ yarn add tailwindcss postcss autoprefixer
+$ yarn tailwindcss init -p
+
+# adding tailwind.css...
+# @tailwind base;
+# @tailwind components;
+# @tailwind utilities;
+
+# turning jit mode on tailwind.config.js...
+# adding paths to purge...
+
+# import './tailwind.css'
+
+# deleting unnecessary files...
+# etc...
+```
+- With VR2T Boilerplate Generator, it's simply:
+```shell
+npx vr2t
+
+# installing dependencies, setting up tailwind with jit, etc...
+# all of that is already configured with VR2T!
+```
+
 ## Installation
 ```shell
 npx vr2t
