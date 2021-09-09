@@ -9,7 +9,6 @@ const main = async () => {
   const res = execSync('npm list -g', { stdio: 'pipe' });
 
   // Generate with no flag option
-
   if (!process.argv[2]) {
     const answers = await inquirer.prompt([
       {
@@ -50,14 +49,16 @@ const main = async () => {
         console.log(
           colors.red(`\n→ The folder ${projectName} already exists.`)
         );
-        console.log(colors.red('→ Please use a different name for your project.'));
+        console.log(
+          colors.red('→ Please use a different name for your project.')
+        );
       } else console.log(err);
       process.exit(1);
     }
 
-    generateBoilerplate(boilerplatePath, projectName);
-
+    await generateBoilerplate(boilerplatePath, projectName);
     process.chdir(path.join(cwd, projectName));
+    installPackages(useNpm, projectName);
 
     // Generate with flag option
   } else {
@@ -86,6 +87,23 @@ const main = async () => {
         );
       }
     });
+  }
+
+  function installPackages(useNpm: boolean, title: string) {
+    try {
+      if (useNpm) execSync('npm i', { stdio: 'inherit' });
+      else execSync('yarn', { stdio: 'inherit' });
+
+      console.log(colors.green.bold('\n  [ Installed Successfully! ]'));
+      console.log('\n→ cd to your project & run the dev server.'.gray);
+
+      console.log(colors.yellow(`\ncd ${title}`));
+
+      if (useNpm) console.log(colors.yellow('npm run dev'));
+      else console.log(colors.yellow('yarn dev'));
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 
