@@ -42,11 +42,7 @@ const main = async () => {
     }
 
     const projectName = answers['projectName'];
-
-    makeProjectFolder(projectName);
-    await generateBoilerplate(boilerplatePath, projectName);
-    process.chdir(path.join(cwd, projectName));
-    installPackages(useNpm, projectName);
+    generateApp(projectName);
 
     // Generate with name &/ flag option
   } else {
@@ -67,10 +63,7 @@ const main = async () => {
       useNpm = true;
     }
 
-    makeProjectFolder(projectName);
-    await generateBoilerplate(boilerplatePath, projectName);
-    process.chdir(path.join(cwd, projectName));
-    installPackages(useNpm, projectName);
+    generateApp(projectName);
   }
 
   async function generateBoilerplate(boilerplate: string, title: string) {
@@ -127,6 +120,13 @@ const main = async () => {
       } else console.log(err);
       process.exit(1);
     }
+  }
+
+  async function generateApp(projectName: string) {
+    makeProjectFolder(projectName);
+    await generateBoilerplate(boilerplatePath, projectName);
+    process.chdir(path.join(cwd, projectName));
+    installPackages(useNpm, projectName);
   }
 };
 
