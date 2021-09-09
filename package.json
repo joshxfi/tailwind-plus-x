@@ -2,7 +2,7 @@
   "name": "vr2t",
   "version": "1.1.4",
   "description": "A boilerplate generator for Vite.js, React TypeScript, & Tailwind CSS",
-  "main": "lib/main.js",
+  "main": "main.js",
   "keywords": [
     "vr2t",
     "boilerplate generator",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/joshxfi/vr2t-generator",
   "bin": {
-    "vr2t": "lib/main.js"
+    "vr2t": "main.js"
   },
   "dependencies": {
     "colors": "^1.4.0",
