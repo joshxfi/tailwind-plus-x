@@ -5,10 +5,10 @@
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
     "skipLibCheck": true,
     "sourceMap": false,
-    "outDir": "./lib",
+    "outDir": ".",
     "moduleResolution": "node",
     "removeComments": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
@@ -24,5 +24,5 @@
     "baseUrl": "."
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts"]
+  "include": ["*.ts"]
 }
