@@ -128,6 +128,7 @@ const main = async () => {
     process.chdir(path.join(cwd, projectName));
     fs.renameSync('_gitignore', '.gitignore');
     fs.renameSync('_prettierrc', '.prettierrc');
+    fs.renameSync('_tsconfig.json', 'tsconfig.json');
     installPackages(useNpm, projectName);
   }
 };
