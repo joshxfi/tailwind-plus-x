@@ -126,6 +126,8 @@ const main = async () => {
     makeProjectFolder(projectName);
     await generateBoilerplate(boilerplatePath, projectName);
     process.chdir(path.join(cwd, projectName));
+    fs.renameSync('_gitignore', '.gitignore');
+    fs.renameSync('_prettierrc', '.prettierrc');
     installPackages(useNpm, projectName);
   }
 };
