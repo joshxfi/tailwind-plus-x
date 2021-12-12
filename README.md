@@ -28,7 +28,7 @@ next-ts
 - To test locally, run:
 ```sh
 # make sure you have ts-node installed (npm i -g ts-node)
-$ ts-node main.ts
+$ ts-node main
 ```
 
 ## License

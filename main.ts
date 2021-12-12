@@ -47,20 +47,34 @@ const main = async () => {
   let template: string = answers['template'];
 
   const useNpm = pkgManager === 'npm';
+  const useYarn = !useNpm && res.toString().includes('yarn@');
 
   const npmTemplate = `npm init vite@latest ${projectName} -- --template ${template}`;
   const yarnTemplate = `yarn create vite ${projectName} --template ${template}`;
 
-  if (!useNpm && res.toString().includes('yarn@')) {
-    console.log(colors.gray('\n→ Using yarn to install packages...'));
-    execSync(yarnTemplate, { stdio: 'inherit' });
-  } else if (useNpm) {
-    console.log(colors.gray('\n→ Using npm to install packages...'));
-    execSync(npmTemplate, { stdio: 'inherit' });
-  } else {
+  const nextTsFlag = template === 'next-ts' ? '--ts' : '';
+
+  const nextNpmTemplate = `npx create-next-app@latest ${projectName} ${nextTsFlag}`;
+  const nextYarnTemplate = `yarn create next-app ${projectName} ${nextTsFlag}`;
+
+  const yarnNotFound = (cmd: string) => {
     console.log(colors.gray('\n→ Cannot find yarn.'));
     console.log(colors.gray('→ Using npm to install packages...'));
-    execSync(npmTemplate, { stdio: 'inherit' });
+    return execSync(cmd, { stdio: 'inherit' });
+  };
+
+  if (template.includes('next')) {
+    if (useYarn) execSync(nextYarnTemplate, { stdio: 'inherit' });
+    else if (useNpm) execSync(nextNpmTemplate, { stdio: 'inherit' });
+    else yarnNotFound(nextNpmTemplate);
+  } else {
+    if (useYarn) {
+      console.log(colors.gray('\n→ Using yarn to install packages...'));
+      execSync(yarnTemplate, { stdio: 'inherit' });
+    } else if (useNpm) {
+      console.log(colors.gray('\n→ Using npm to install packages...'));
+      execSync(npmTemplate, { stdio: 'inherit' });
+    } else yarnNotFound(npmTemplate);
   }
 
   process.chdir(path.join(cwd, projectName));
@@ -78,7 +92,7 @@ const main = async () => {
 
     execSync(`npx tailwindcss init`, { stdio: 'inherit' });
 
-    console.log(colors.green.bold('\n  [ Installed Successfully! ]'));
+    console.log(colors.green.bold('\n[ Installed Successfully! ]'));
     console.log('\nGet Started, Run:'.gray);
 
     console.log(colors.yellow(`\ncd ${projectName}`));
