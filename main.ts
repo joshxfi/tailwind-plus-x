@@ -42,9 +42,9 @@ const main = async () => {
     },
   ]);
 
-  const projectName = answers['projectName'];
+  const projectName: string = answers['projectName'];
   const pkgManager: PackageManager = answers['pkgManager'];
-  let template = answers['template'];
+  let template: string = answers['template'];
 
   const useNpm = pkgManager === 'npm';
 
@@ -91,15 +91,43 @@ const main = async () => {
 
   const projectDir = path.join(cwd, projectName);
 
+  const useTwConfig = () => {
+    let content: string;
+
+    if (template.includes('next'))
+      content = "'./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'";
+    else if (template.includes('vanilla')) content = "'./index.html'";
+    else content = "'./index.html', './src/**/*.{js,ts,jsx,tsx}'";
+
+    return `content: [${content}]`;
+  };
+
+  const useTwPath = () => {
+    switch (template) {
+      case 'next':
+      case 'next-ts':
+        return 'styles/globals.css';
+
+      case 'vanilla':
+        return 'style.css';
+
+      case 'vanilla-ts':
+        return 'src/style.css';
+
+      default:
+        return 'src/index.css';
+    }
+  };
+
   const tailwindConfig = {
     files: `${projectDir}/tailwind.config.js`,
     from: /content: \[]/g,
-    to: "content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}']",
+    to: useTwConfig(),
   };
   try {
     await replaceInFile(tailwindConfig);
     fs.writeFileSync(
-      path.join(projectDir, 'src/index.css'),
+      path.join(projectDir, useTwPath()),
       '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
     );
   } catch (error) {
