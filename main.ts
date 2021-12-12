@@ -1,7 +1,9 @@
+import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
+import { replaceInFile } from 'replace-in-file';
 
 type PackageManager = 'npm' | 'yarn';
 
@@ -21,14 +23,14 @@ const main = async () => {
       name: 'template',
       type: 'list',
       choices: [
+        'vanilla',
+        'vanilla-ts',
         'react',
         'react-ts',
         'next',
         'next-ts',
-        'vanilla',
-        'vanilla-ts',
       ],
-      default: 'react',
+      default: 'vanilla',
     },
 
     {
@@ -40,40 +42,44 @@ const main = async () => {
     },
   ]);
 
-  
   const projectName = answers['projectName'];
   const pkgManager: PackageManager = answers['pkgManager'];
   let template = answers['template'];
-  
-  const useNpm = pkgManager === 'npm'
+
+  const useNpm = pkgManager === 'npm';
 
   const npmTemplate = `npm init vite@latest ${projectName} -- --template ${template}`;
   const yarnTemplate = `yarn create vite ${projectName} --template ${template}`;
 
   if (!useNpm && res.toString().includes('yarn@')) {
-    console.log(colors.gray('\n→ Using yarn to install packages.'));
+    console.log(colors.gray('\n→ Using yarn to install packages...'));
     execSync(yarnTemplate, { stdio: 'inherit' });
   } else if (useNpm) {
-    console.log(colors.gray('\n→ Using npm to install packages.'));
+    console.log(colors.gray('\n→ Using npm to install packages...'));
     execSync(npmTemplate, { stdio: 'inherit' });
   } else {
     console.log(colors.gray('\n→ Cannot find yarn.'));
-    console.log(colors.gray('→ Using npm to install packages.'));
+    console.log(colors.gray('→ Using npm to install packages...'));
     execSync(npmTemplate, { stdio: 'inherit' });
   }
 
   process.chdir(path.join(cwd, projectName));
 
   try {
-    console.log(colors.gray('\n→ Installing Tailwind CSS...'));
+    console.log(colors.gray('\n→ Installing dependencies & Tailwind CSS...'));
 
-    let prefix = 'npm install'
+    let prefix = 'npm i';
 
-    if (!useNpm) prefix = 'yarn add' 
-    execSync(prefix.concat(' -D tailwindcss@latest postcss@latest autoprefixer@latest'), { stdio: 'inherit' });
+    if (!useNpm) prefix = 'yarn add';
+    execSync(
+      `${prefix} -D tailwindcss@latest postcss@latest autoprefixer@latest`,
+      { stdio: 'inherit' }
+    );
+
+    execSync(`npx tailwindcss init`, { stdio: 'inherit' });
 
     console.log(colors.green.bold('\n  [ Installed Successfully! ]'));
-    console.log('\n→ cd to your project & run the dev server.'.gray);
+    console.log('\nGet Started, Run:'.gray);
 
     console.log(colors.yellow(`\ncd ${projectName}`));
 
@@ -83,6 +89,22 @@ const main = async () => {
     console.log(err);
   }
 
+  const projectDir = path.join(cwd, projectName);
+
+  const tailwindConfig = {
+    files: `${projectDir}/tailwind.config.js`,
+    from: /content: \[]/g,
+    to: "content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}']",
+  };
+  try {
+    await replaceInFile(tailwindConfig);
+    fs.writeFileSync(
+      path.join(projectDir, 'src/index.css'),
+      '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
+    );
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
 };
 
 main();
