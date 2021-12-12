@@ -5,4 +5,31 @@
  
 </div>
 
-> Currently on Hiatus
+## Installation:
+```sh
+# NOTE: this is not yet published to npm
+$ npx twpx
+```
+> After running the command, it will walk you through the installation process.
+
+## Templates Available:
+```
+vanilla
+vanilla-ts
+react
+react-ts
+next
+next-ts
+```
+
+## Contributing
+- [Report bugs or feature requests.](https://github.com/joshxfi/tailwind-plus-x/issues)
+- Submit your pull request on the `dev` branch.
+- To test locally, run:
+```sh
+# make sure you have ts-node installed (npm i -g ts-node)
+$ ts-node main.ts
+```
+
+## License
+This [repository](https://github.com/joshxfi/tailwind-plus-x) is licensed under the [MIT license.](https://github.com/joshxfi/trackAsOne/blob/main/LICENSE)
