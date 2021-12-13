@@ -63,6 +63,7 @@ const main = async () => {
     return execSync(cmd, { stdio: 'inherit' });
   };
 
+try {
   if (template.includes('next')) {
     if (useYarn) execSync(nextYarnTemplate, { stdio: 'inherit' });
     else if (useNpm) execSync(nextNpmTemplate, { stdio: 'inherit' });
@@ -90,7 +91,7 @@ const main = async () => {
       { stdio: 'inherit' }
     );
 
-    execSync(`npx tailwindcss init`, { stdio: 'inherit' });
+    execSync(`npx tailwindcss init -p`, { stdio: 'inherit' });
 
     console.log(colors.green.bold('\n[ Installed Successfully! ]'));
     console.log('\nGet Started, Run:'.gray);
@@ -102,51 +103,56 @@ const main = async () => {
   } catch (err) {
     console.log(err);
   }
+} catch (err) {
+  console.error('Error occurred:', err);
+}
 
-  const projectDir = path.join(cwd, projectName);
+const projectDir = path.join(cwd, projectName);
 
-  const useTwConfig = () => {
-    let content: string;
+const useTwConfig = () => {
+  let content: string;
 
-    if (template.includes('next'))
-      content = "'./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'";
-    else if (template.includes('vanilla')) content = "'./index.html'";
-    else content = "'./index.html', './src/**/*.{js,ts,jsx,tsx}'";
+  if (template.includes('next'))
+    content =
+      "'./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'";
+  else if (template.includes('vanilla')) content = "'./index.html'";
+  else content = "'./index.html', './src/**/*.{js,ts,jsx,tsx}'";
 
-    return `content: [${content}]`;
-  };
+  return `content: [${content}]`;
+};
 
-  const useTwPath = () => {
-    switch (template) {
-      case 'next':
-      case 'next-ts':
-        return 'styles/globals.css';
+const useTwPath = () => {
+  switch (template) {
+    case 'next':
+    case 'next-ts':
+      return 'styles/globals.css';
 
-      case 'vanilla':
-        return 'style.css';
+    case 'vanilla':
+      return 'style.css';
 
-      case 'vanilla-ts':
-        return 'src/style.css';
+    case 'vanilla-ts':
+      return 'src/style.css';
 
-      default:
-        return 'src/index.css';
-    }
-  };
-
-  const tailwindConfig = {
-    files: `${projectDir}/tailwind.config.js`,
-    from: /content: \[]/g,
-    to: useTwConfig(),
-  };
-  try {
-    await replaceInFile(tailwindConfig);
-    fs.writeFileSync(
-      path.join(projectDir, useTwPath()),
-      '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
-    );
-  } catch (error) {
-    console.error('Error occurred:', error);
+    default:
+      return 'src/index.css';
   }
+};
+
+const tailwindConfig = {
+  files: `${projectDir}/tailwind.config.js`,
+  from: /content: \[]/g,
+  to: useTwConfig(),
+};
+
+try {
+  await replaceInFile(tailwindConfig);
+  fs.writeFileSync(
+    path.join(projectDir, useTwPath()),
+    '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
+  );
+} catch (err) {
+  console.error('Error occurred:', err);
+}
 };
 
 main();
