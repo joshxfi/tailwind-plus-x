@@ -1,18 +1,24 @@
 <div align=center>
   
 # Tailwind Plus X
-![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) 
  
 </div>
 
-## Installation:
+- A boilerplate generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. We use [`Vite`](https://github.com/vitejs/vite) is used for most of the templates. See available templates below. 
+
+- 💚 Consider leaving a star on this [repository](https://github.com/joshxfi/tailwind-plus-x) if you found this helpful!
+
+## Installation
+- Go to the directory where you want to store your project:
 ```sh
-# NOTE: this is not yet published to npm
+$ cd your_directory
+```
+- Running the command below will walk you through an interactive installation process:
+```sh
 $ npx twpx
 ```
-> After running the command, it will walk you through the installation process.
 
-## Templates Available:
+## Templates Available
 ```
 vanilla
 vanilla-ts
@@ -28,6 +34,7 @@ next-ts
 - To test locally, run:
 ```sh
 # make sure you have ts-node installed (npm i -g ts-node)
+$ cd your_cloned_fork
 $ ts-node main
 ```
 
