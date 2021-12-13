@@ -1,35 +1,38 @@
 {
-  "name": "twpx",
-  "version": "1.0.0",
-  "description": "A Generator for a Variety of Boilerplate with Tailwind CSS Configuration.",
-  "main": "main.js",
-  "keywords": [
-    "twpx",
-    "tailwind-plus-x",
-    "tailwindcss",
-    "boilerplate",
-    "vitejs",
-    "reactjs",
-    "nextjs",
-    "typescript"
-  ],
-  "author": "Josh Daniel Bañares",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/joshxfi/tailwind-plus-x/issues"
-  },
-  "homepage": "https://github.com/joshxfi/tailwind-plus-x",
-  "bin": {
-    "twpx": "main.js"
-  },
-  "dependencies": {
-    "colors": "^1.4.0",
-    "inquirer": "^8.1.2",
-    "replace-in-file": "^6.3.2"
-  },
-  "devDependencies": {
-    "@types/inquirer": "^8.1.1",
-    "@types/node": "^16.7.10",
-    "typescript": "^4.4.2"
-  }
+    "name": "twpx",
+    "version": "1.0.0",
+    "description": "A Generator for a Variety of Boilerplate with Tailwind CSS Configuration.",
+    "main": "lib/main.js",
+    "keywords": [
+        "twpx",
+        "tailwind-plus-x",
+        "tailwindcss",
+        "boilerplate",
+        "vitejs",
+        "reactjs",
+        "nextjs",
+        "typescript"
+    ],
+    "author": "Josh Daniel Bañares",
+    "license": "MIT",
+    "files": [
+        "lib"
+    ],
+    "bugs": {
+        "url": "https://github.com/joshxfi/tailwind-plus-x/issues"
+    },
+    "homepage": "https://github.com/joshxfi/tailwind-plus-x",
+    "bin": {
+        "twpx": "lib/main.js"
+    },
+    "dependencies": {
+        "colors": "^1.4.0",
+        "inquirer": "^8.1.2",
+        "replace-in-file": "^6.3.2"
+    },
+    "devDependencies": {
+        "@types/inquirer": "^8.1.1",
+        "@types/node": "^16.7.10",
+        "typescript": "^4.4.2"
+    }
 }
