@@ -9,8 +9,6 @@ type PackageManager = 'npm' | 'yarn';
 
 const main = async () => {
     const cwd = process.cwd();
-    const res = execSync('npm list -g', { stdio: 'pipe' });
-    const npmVersion = execSync('npm -v', { stdio: 'pipe' });
 
     const answers = await inquirer.prompt([
         {
@@ -45,16 +43,12 @@ const main = async () => {
 
     const projectName: string = answers['projectName'];
     const pkgManager: PackageManager = answers['pkgManager'];
-    let template: string = answers['template'];
+    const template: string = answers['template'];
+    let useNpm = pkgManager === 'npm';
 
-    const useNpm = pkgManager === 'npm';
-    const useYarn = !useNpm && res.toString().includes('yarn@');
+    // START: TEMPLATES
 
-    const viteTemplate = `npm init vite@latest ${projectName}`;
-    let npmTemplate: string;
-    if (npmVersion.toString().split('.')[0] === '6')
-        npmTemplate = `${viteTemplate} --template ${template}`;
-    else npmTemplate = `${viteTemplate} -- --template ${template}`; // npm 7+, extra double-dash is needed
+    const npmTemplate = `npm init vite@latest ${projectName} -- --template ${template}`;
     const yarnTemplate = `yarn create vite ${projectName} --template ${template}`;
 
     const nextTsFlag = template === 'next-ts' ? '--ts' : '';
@@ -62,60 +56,65 @@ const main = async () => {
     const nextNpmTemplate = `npx create-next-app@latest ${projectName} ${nextTsFlag}`;
     const nextYarnTemplate = `yarn create next-app ${projectName} ${nextTsFlag}`;
 
-    const yarnNotFound = (cmd: string) => {
-        console.log(colors.gray('\n→ Cannot find yarn.'));
-        console.log(colors.gray('→ Using npm to install packages...'));
-        return execSync(cmd, { stdio: 'inherit' });
+    // END: TEMPLATES
+
+    const usePkgManagerMsg = (pkg: PackageManager) => {
+        return colors.gray(`→ Using ${pkg} to install packages...`);
     };
 
-    try {
-        if (template.includes('next')) {
-            if (useYarn) execSync(nextYarnTemplate, { stdio: 'inherit' });
-            else if (useNpm) execSync(nextNpmTemplate, { stdio: 'inherit' });
-            else yarnNotFound(nextNpmTemplate);
-        } else {
-            if (useYarn) {
-                console.log(
-                    colors.gray('\n→ Using yarn to install packages...')
-                );
+    if (!useNpm) {
+        console.log(colors.gray('\nChecking if you have yarn installed...'));
+        const checkDeps = execSync('npm list -g', { stdio: 'pipe' });
+
+        if (checkDeps.toString().includes('yarn@')) {
+            if (template.includes('next')) {
+                execSync(nextYarnTemplate, { stdio: 'inherit' });
+            } else {
+                console.log(usePkgManagerMsg('yarn'));
                 execSync(yarnTemplate, { stdio: 'inherit' });
-            } else if (useNpm) {
-                console.log(
-                    colors.gray('\n→ Using npm to install packages...')
-                );
+            }
+        } else {
+            console.log(colors.gray('\n→ Cannot find yarn.'));
+            useNpm = true;
+
+            if (template.includes('next')) {
+                execSync(nextNpmTemplate, { stdio: 'inherit' });
+            } else {
+                console.log(usePkgManagerMsg('npm'));
                 execSync(npmTemplate, { stdio: 'inherit' });
-            } else yarnNotFound(npmTemplate);
+            }
         }
+    } else {
+        console.log(usePkgManagerMsg('npm'));
+        execSync(npmTemplate, { stdio: 'inherit' });
+    }
 
-        process.chdir(path.join(cwd, projectName));
+    process.chdir(path.join(cwd, projectName));
 
-        try {
-            console.log(
-                colors.gray('\n→ Installing dependencies & Tailwind CSS...')
-            );
+    try {
+        console.log(
+            colors.gray('\n→ Installing dependencies & Tailwind CSS...')
+        );
 
-            let prefix = 'npm i';
+        let prefix = 'npm i';
 
-            if (!useNpm) prefix = 'yarn add';
-            execSync(
-                `${prefix} -D tailwindcss@latest postcss@latest autoprefixer@latest`,
-                { stdio: 'inherit' }
-            );
+        if (!useNpm) prefix = 'yarn add';
+        execSync(
+            `${prefix} -D tailwindcss@latest postcss@latest autoprefixer@latest`,
+            { stdio: 'inherit' }
+        );
 
-            execSync(`npx tailwindcss init -p`, { stdio: 'inherit' });
+        execSync(`npx tailwindcss init -p`, { stdio: 'inherit' });
 
-            console.log(colors.green.bold('\n[ Installed Successfully! ]'));
-            console.log('\nGet Started, Run:'.gray);
+        console.log(colors.green.bold('\n[ Installed Successfully! ]'));
+        console.log('\nGet Started, Run:'.gray);
 
-            console.log(colors.yellow(`\ncd ${projectName}`));
+        console.log(colors.yellow(`\ncd ${projectName}`));
 
-            if (useNpm) console.log(colors.yellow('npm run dev'));
-            else console.log(colors.yellow('yarn dev'));
-        } catch (err) {
-            console.log(err);
-        }
+        if (useNpm) console.log(colors.yellow('npm run dev'));
+        else console.log(colors.yellow('yarn dev'));
     } catch (err) {
-        console.error('Error occurred:', err);
+        console.log(err);
     }
 
     const projectDir = path.join(cwd, projectName);
