@@ -9,7 +9,8 @@
 - 💚 Consider leaving a star on this [repository](https://github.com/joshxfi/tailwind-plus-x) if you found this helpful!
 
 ## Installation
-- NOTE: if you are using `npm`, make sure to have `v7.x` (do `npm -v` to check version, `npm i -g npm@latest` to upgrade)
+- NOTE: if you are using `npm` to install a template, make sure to have `v7.x`
+  - Do `npm -v` to check version, `npm i -g npm@latest` to upgrade.
 - Go to the directory where you want to store your project:
 ```sh
 $ cd your_directory
