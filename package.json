@@ -1,6 +1,6 @@
 {
     "name": "twpx",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A Generator for a Variety of Boilerplate with Tailwind CSS Configuration.",
     "main": "lib/main.js",
     "keywords": [
@@ -8,11 +8,7 @@
         "tailwind-plus-x",
         "tailwindcss",
         "boilerplate",
-        "template generator",
-        "vitejs",
-        "reactjs",
-        "nextjs",
-        "typescript"
+        "template generator"
     ],
     "author": "Josh Daniel Bañares",
     "license": "MIT",
