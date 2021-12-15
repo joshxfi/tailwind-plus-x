@@ -4,11 +4,12 @@
  
 </div>
 
-- A boilerplate generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. We use [`Vite`](https://github.com/vitejs/vite) is used for most of the templates. See available templates below. 
+- A boilerplate generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. We use [`Vite`](https://github.com/vitejs/vite) for most of the templates. See available templates below. 
 
 - 💚 Consider leaving a star on this [repository](https://github.com/joshxfi/tailwind-plus-x) if you found this helpful!
 
 ## Installation
+- NOTE: if you are using `npm`, make sure to have `v7.x` (do `npm -v` to check version, `npm i -g npm@latest` to upgrade)
 - Go to the directory where you want to store your project:
 ```sh
 $ cd your_directory
