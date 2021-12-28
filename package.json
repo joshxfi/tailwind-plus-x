@@ -1,7 +1,7 @@
 {
     "name": "twpx",
-    "version": "1.0.2",
-    "description": "A Generator for a Variety of Boilerplate with Tailwind CSS Configuration.",
+    "version": "1.0.3",
+    "description": "A boilerplate generator that automatically configures the latest Tailwind CSS",
     "main": "lib/main.js",
     "keywords": [
         "twpx",
@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "colors": "^1.4.0",
+        "commander": "^8.3.0",
         "inquirer": "^8.1.2",
         "replace-in-file": "^6.3.2"
     },

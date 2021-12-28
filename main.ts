@@ -2,49 +2,88 @@ import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import inquirer from 'inquirer';
+import { Command } from 'commander';
 import { execSync } from 'child_process';
 import { replaceInFile } from 'replace-in-file';
 
 type PackageManager = 'npm' | 'yarn';
 
+const templates = [
+    'vanilla',
+    'vanilla-ts',
+    'react',
+    'react-ts',
+    'next',
+    'next-ts',
+];
+
+const cwd = process.cwd();
+const program = new Command();
+
+program
+    .option('-t, --template <template>', 'choose a template')
+    .option('-y, --yarn', 'use yarn');
+
+program.parse(process.argv);
+
 const main = async () => {
-    const cwd = process.cwd();
+    let projectName: string;
+    let template: string;
+    let useNpm = true;
 
-    const answers = await inquirer.prompt([
-        {
-            message: 'Name of your project:',
-            name: 'projectName',
-            default: 'my-twpx-app',
-        },
+    if (!process.argv[2]) {
+        const answers = await inquirer.prompt([
+            {
+                message: 'Name of your project:',
+                name: 'projectName',
+                default: 'my-twpx-app',
+            },
 
-        {
-            message: 'Choose a template:',
-            name: 'template',
-            type: 'list',
-            choices: [
-                'vanilla',
-                'vanilla-ts',
-                'react',
-                'react-ts',
-                'next',
-                'next-ts',
-            ],
-            default: 'vanilla',
-        },
+            {
+                message: 'Choose a template:',
+                name: 'template',
+                type: 'list',
+                choices: templates,
+                default: 'vanilla',
+            },
 
-        {
-            message: 'Install with:',
-            name: 'pkgManager',
-            type: 'list',
-            choices: ['npm', 'yarn'],
-            default: 'npm',
-        },
-    ]);
+            {
+                message: 'Install with:',
+                name: 'pkgManager',
+                type: 'list',
+                choices: ['npm', 'yarn'],
+                default: 'npm',
+            },
+        ]);
 
-    const projectName: string = answers['projectName'];
-    const pkgManager: PackageManager = answers['pkgManager'];
-    const template: string = answers['template'];
-    let useNpm = pkgManager === 'npm';
+        projectName = answers['projectName'];
+        template = answers['template'];
+
+        const pkgManager: PackageManager = answers['pkgManager'];
+        useNpm = pkgManager === 'npm';
+    } else {
+        const options = program.opts();
+        projectName = process.argv[2];
+
+        if (!options.template) {
+            console.log(
+                '\nProvide a template by using -t <template> or --template <template>\nAvailable templates:\n',
+                `\n${templates.join('\n')}`
+            );
+
+            process.exit(1);
+        } else if (!templates.includes(options.template)) {
+            console.log(
+                '\nTemplate does not exist. Available templates:\n',
+                `\n${templates.join('\n')}`
+            );
+
+            process.exit(1);
+        }
+
+        template = options.template;
+        if (options.yarn) useNpm = false;
+    }
 
     // START: TEMPLATES
 
@@ -59,7 +98,7 @@ const main = async () => {
     // END: TEMPLATES
 
     const usePkgManagerMsg = (pkg: PackageManager) => {
-        return colors.gray(`→ Using ${pkg} to install packages...`);
+        return colors.gray(`\n→ Using ${pkg} to install packages...`);
     };
 
     if (!useNpm) {
