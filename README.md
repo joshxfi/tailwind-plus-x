@@ -26,12 +26,17 @@ $ npx twpx <project_name> --template <template> --yarn
 
 # shorthand version:
 $ npx twpx <project_name> -t <template> -y
+
+# eg:
+$ npx twpx my-project -t vanilla -y
 ```
-- NOTE: some terminals like `git bash` will not work well with the interactive installation (use the other installation instead)
+**NOTE:** Some terminals like `git bash` will not work well with the interactive installation, use the direct installation instead.
+
+---
 
 ## How It Works
-- For example, you named your project `hello-world` & chose `react-ts` template with `yarn`. The generator will execute:
-```ruby
+- For example, you named your project `hello-world` with `react-ts` template and `yarn`. The generator will execute:
+```js
 $ yarn create vite hello-world --template react-ts
 $ cd hello-world
 $ yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
