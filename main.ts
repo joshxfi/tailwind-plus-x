@@ -13,6 +13,8 @@ const templates = [
     'vanilla-ts',
     'react',
     'react-ts',
+    'preact',
+    'preact-ts',
     'next',
     'next-ts',
 ];
