@@ -1,6 +1,6 @@
 {
     "name": "twpx",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A boilerplate generator that automatically configures the latest Tailwind CSS",
     "main": "lib/main.js",
     "keywords": [
