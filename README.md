@@ -7,7 +7,7 @@
  
 </div>
 
-A boilerplate generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. [`Vite`](https://github.com/vitejs/vite) is used for most of the templates. See available templates below. 
+A template generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. [`Vite`](https://github.com/vitejs/vite) is used for most of the templates. See available templates below. 
 
 ## Installation
 - If you are using `npm` to install a template, make sure to have `v7.x` (do `npm -v` to check version)
@@ -28,7 +28,7 @@ $ npx twpx <project_name> --template <template> --yarn
 $ npx twpx <project_name> -t <template> -y
 
 # eg:
-$ npx twpx my-project -t vanilla -y
+$ npx twpx my-project --template vanilla
 ```
 **NOTE:** Some terminals like `git bash` will not work well with the interactive installation, use the direct installation instead.
 
@@ -49,14 +49,12 @@ $ yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
 ```
 
 ## Templates Available
-```js
-vanilla
-vanilla-ts
-react
-react-ts
-next
-next-ts
-```
+| **Templates** | **TypeScript Templates** |
+| --- | --- |
+| `vanilla` | `vanilla-ts` |
+| `react` | `react-ts` |
+| `preact` | `preact-ts` |
+| `next` | `next-ts` |
 
 ## Contributing
 - [Report bugs or feature requests.](https://github.com/joshxfi/tailwind-plus-x/issues)
@@ -64,7 +62,7 @@ next-ts
 - To test locally, run:
 ```sh
 # make sure you have ts-node installed (npm i -g ts-node)
-$ cd your_cloned_fork
+$ cd <your_cloned_fork>
 $ ts-node main
 ```
 
