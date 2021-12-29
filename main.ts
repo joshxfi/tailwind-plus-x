@@ -45,10 +45,20 @@ const main = async () => {
                 message: 'Choose a template:',
                 name: 'template',
                 type: 'list',
-                choices: templates,
+                choices: templates.filter((t) => !t.includes('ts')),
                 default: 'vanilla',
             },
+        ]);
 
+        const _template = answers['template'];
+        const _answers = await inquirer.prompt([
+            {
+                message: 'Choose a variation:',
+                name: 'template',
+                type: 'list',
+                choices: [_template, _template + '-ts'],
+                default: _template,
+            },
             {
                 message: 'Install with:',
                 name: 'pkgManager',
@@ -59,10 +69,9 @@ const main = async () => {
         ]);
 
         projectName = answers['projectName'];
-        template = answers['template'];
+        template = _answers['template'];
 
-        const pkgManager: PackageManager = answers['pkgManager'];
-        useNpm = pkgManager === 'npm';
+        useNpm = _answers['pkgManager'] === 'npm';
     } else {
         const options = program.opts();
         projectName = process.argv[2];
@@ -103,12 +112,14 @@ const main = async () => {
         return colors.gray(`\n→ Using ${pkg} to install packages...`);
     };
 
+    const useNextTemplate = template.includes('next');
+
     if (!useNpm) {
         console.log(colors.gray('\nChecking if you have yarn installed...'));
         const checkDeps = execSync('npm list -g', { stdio: 'pipe' });
 
         if (checkDeps.toString().includes('yarn@')) {
-            if (template.includes('next')) {
+            if (useNextTemplate) {
                 execSync(nextYarnTemplate, { stdio: 'inherit' });
             } else {
                 console.log(usePkgManagerMsg('yarn'));
@@ -118,7 +129,7 @@ const main = async () => {
             console.log(colors.gray('\n→ Cannot find yarn.'));
             useNpm = true;
 
-            if (template.includes('next')) {
+            if (useNextTemplate) {
                 execSync(nextNpmTemplate, { stdio: 'inherit' });
             } else {
                 console.log(usePkgManagerMsg('npm'));
@@ -127,7 +138,9 @@ const main = async () => {
         }
     } else {
         console.log(usePkgManagerMsg('npm'));
-        execSync(npmTemplate, { stdio: 'inherit' });
+        if (useNextTemplate) {
+            execSync(nextNpmTemplate, { stdio: 'inherit' });
+        } else execSync(npmTemplate, { stdio: 'inherit' });
     }
 
     process.chdir(path.join(cwd, projectName));
@@ -163,7 +176,7 @@ const main = async () => {
     const useTwConfig = () => {
         let content: string;
 
-        if (template.includes('next'))
+        if (useNextTemplate)
             content =
                 "'./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'";
         else if (template.includes('vanilla')) content = "'./index.html'";
