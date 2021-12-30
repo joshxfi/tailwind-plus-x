@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
@@ -19,14 +20,12 @@ const templates = [
     'next-ts',
 ];
 
-const cwd = process.cwd();
-
 program
     .option('-t, --template <template>', 'choose a template')
     .option('-y, --yarn', 'use yarn')
     .parse();
 
-const main = async () => {
+(async () => {
     let projectName: string;
     let template: string;
     let useNpm = true;
@@ -141,7 +140,7 @@ const main = async () => {
         } else execSync(npmTemplate, { stdio: 'inherit' });
     }
 
-    process.chdir(path.join(cwd, projectName));
+    process.chdir(path.join(process.cwd(), projectName));
 
     try {
         console.log(
@@ -169,7 +168,7 @@ const main = async () => {
         console.log(err);
     }
 
-    const projectDir = path.join(cwd, projectName);
+    const projectDir = path.join(process.cwd(), projectName);
 
     const useTwConfig = () => {
         let content: string;
@@ -215,6 +214,4 @@ const main = async () => {
     } catch (err) {
         console.error('Error occurred:', err);
     }
-};
-
-main();
+})();
