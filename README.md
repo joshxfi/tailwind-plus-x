@@ -10,7 +10,8 @@
 A template generator that automatically configures the latest [`Tailwind CSS`](https://github.com/tailwindlabs/tailwindcss) version for you. [`Vite`](https://github.com/vitejs/vite) is used for most of the templates. See available templates below. 
 
 ## Installation
-- If you are using `npm` to install a template, make sure to have `v7.x` (do `npm -v` to check version)
+**NOTE:** If you are using `npm` to install a template, make sure to have `v7.x` (do `npm -v` to check version)
+
 - Go to the directory where you want to store your project:
 ```sh
 $ cd <your_directory>
@@ -19,7 +20,7 @@ $ cd <your_directory>
 ```sh
 $ npx twpx
 ```
-- You can also directly generate it by doing:
+- You can also directly generate by doing:
 ```sh
 # NOTE: to use npm, remove the yarn flag
 $ npx twpx <project_name> --template <template> --yarn
@@ -28,9 +29,9 @@ $ npx twpx <project_name> --template <template> --yarn
 $ npx twpx <project_name> -t <template> -y
 
 # eg:
-$ npx twpx@latest my-project --template vanilla
+$ npx twpx my-project -t vanilla
 ```
-**NOTE:** Some terminals like `git bash` will not work well with the interactive installation, use the direct installation instead.
+**NOTE:** Some terminals like `git bash` will not work with the interactive installation, use the direct installation instead.
 
 ---
 
@@ -59,12 +60,18 @@ $ yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
 ## Contributing
 - [Report bugs or feature requests.](https://github.com/joshxfi/tailwind-plus-x/issues)
 - Submit your pull request on the `dev` branch.
-- To test locally, run:
+
+To test locally, run:
 ```sh
-# make sure you have ts-node installed (npm i -g ts-node)
 $ cd <your_cloned_fork>
+
+# then
 $ ts-node main
+
+# or
+$ yarn build
+$ node lib/main
 ```
 
 ## License
-This [repository](https://github.com/joshxfi/tailwind-plus-x) is licensed under the [MIT license.](https://github.com/joshxfi/trackAsOne/blob/main/LICENSE)
+This [repository](https://github.com/joshxfi/tailwind-plus-x) is licensed under the [MIT License.](https://github.com/joshxfi/tailwind-plus-x/blob/main/LICENSE)
