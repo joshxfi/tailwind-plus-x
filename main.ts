@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import inquirer from 'inquirer';
-import { Command } from 'commander';
+import { program } from 'commander';
 import { execSync } from 'child_process';
 import { replaceInFile } from 'replace-in-file';
 
@@ -19,16 +20,12 @@ const templates = [
     'next-ts',
 ];
 
-const cwd = process.cwd();
-const program = new Command();
-
 program
     .option('-t, --template <template>', 'choose a template')
-    .option('-y, --yarn', 'use yarn');
+    .option('-y, --yarn', 'use yarn')
+    .parse();
 
-program.parse(process.argv);
-
-const main = async () => {
+(async () => {
     let projectName: string;
     let template: string;
     let useNpm = true;
@@ -143,7 +140,7 @@ const main = async () => {
         } else execSync(npmTemplate, { stdio: 'inherit' });
     }
 
-    process.chdir(path.join(cwd, projectName));
+    process.chdir(path.join(process.cwd(), projectName));
 
     try {
         console.log(
@@ -171,7 +168,7 @@ const main = async () => {
         console.log(err);
     }
 
-    const projectDir = path.join(cwd, projectName);
+    const projectDir = path.join(process.cwd(), projectName);
 
     const useTwConfig = () => {
         let content: string;
@@ -217,6 +214,4 @@ const main = async () => {
     } catch (err) {
         console.error('Error occurred:', err);
     }
-};
-
-main();
+})();

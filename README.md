@@ -4,8 +4,6 @@
  ![example workflow](https://github.com/joshxfi/tailwind-plus-x/actions/workflows/codeql-analysis.yml/badge.svg)
  [![npm version](https://badge.fury.io/js/twpx.svg)](https://badge.fury.io/js/twpx)
  ![license](https://img.shields.io/badge/license-MIT-brightgreen?style=flat)
-  
- **NOTICE: twpx@1.0.3 & above are currently not working thus only interactive installation is currently supported.**
  
 </div>
 
@@ -30,7 +28,7 @@ $ npx twpx <project_name> --template <template> --yarn
 $ npx twpx <project_name> -t <template> -y
 
 # eg:
-$ npx twpx my-project --template vanilla
+$ npx twpx@latest my-project --template vanilla
 ```
 **NOTE:** Some terminals like `git bash` will not work well with the interactive installation, use the direct installation instead.
 
