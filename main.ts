@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import inquirer from 'inquirer';
-import { Command } from 'commander';
+import { program } from 'commander';
 import { execSync } from 'child_process';
 import { replaceInFile } from 'replace-in-file';
 
@@ -20,13 +20,11 @@ const templates = [
 ];
 
 const cwd = process.cwd();
-const program = new Command();
 
 program
     .option('-t, --template <template>', 'choose a template')
-    .option('-y, --yarn', 'use yarn');
-
-program.parse(process.argv);
+    .option('-y, --yarn', 'use yarn')
+    .parse();
 
 const main = async () => {
     let projectName: string;
