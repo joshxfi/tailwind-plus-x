@@ -167,7 +167,7 @@ program
         console.log(err);
     }
 
-    const projectDir = path.join(process.cwd(), projectName);
+    const projectDir = process.cwd();
 
     const useTwConfig = () => {
         let content: string;
