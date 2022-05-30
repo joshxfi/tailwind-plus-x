@@ -8,6 +8,13 @@ import { replaceInFile } from 'replace-in-file';
 
 type PackageManager = 'npm' | 'yarn';
 
+const dirExists = (projectName: string) => {
+    if (fs.existsSync(path.join(process.cwd(), projectName))) {
+        console.log(colors.yellow('\nDirectory already exists.'));
+        process.exit(0);
+    }
+};
+
 const templates = [
     'vanilla',
     'vanilla-ts',
@@ -66,11 +73,14 @@ program
 
         projectName = answers['projectName'];
         template = _answers['template'];
-
         useNpm = _answers['pkgManager'] === 'npm';
+
+        dirExists(projectName);
     } else {
         const options = program.opts();
         projectName = process.argv[2];
+
+        dirExists(projectName);
 
         if (!options.template) {
             console.log(
@@ -151,7 +161,8 @@ program
         if (useNpm) console.log(colors.yellow('npm run dev'));
         else console.log(colors.yellow('yarn dev'));
     } catch (err) {
-        console.log(err);
+        console.error('An error occurred', err);
+        process.exit(1);
     }
 
     const projectDir = process.cwd();
@@ -199,5 +210,6 @@ program
         );
     } catch (err) {
         console.error('An error occurred:', err);
+        process.exit(1);
     }
 })();
