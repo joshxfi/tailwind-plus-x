@@ -8,6 +8,13 @@ import { replaceInFile } from 'replace-in-file';
 
 type PackageManager = 'npm' | 'yarn';
 
+const dirExists = (projectName: string) => {
+    if (fs.existsSync(path.join(process.cwd(), projectName))) {
+        console.log(colors.yellow('\nDirectory already exists.'));
+        process.exit(0);
+    }
+};
+
 const templates = [
     'vanilla',
     'vanilla-ts',
@@ -66,11 +73,14 @@ program
 
         projectName = answers['projectName'];
         template = _answers['template'];
-
         useNpm = _answers['pkgManager'] === 'npm';
+
+        dirExists(projectName);
     } else {
         const options = program.opts();
         projectName = process.argv[2];
+
+        dirExists(projectName);
 
         if (!options.template) {
             console.log(
@@ -111,26 +121,11 @@ program
     const useNextTemplate = template.includes('next');
 
     if (!useNpm) {
-        console.log(colors.gray('\nChecking if you have yarn installed...'));
-        const checkDeps = execSync('npm list -g', { stdio: 'pipe' });
-
-        if (checkDeps.toString().includes('yarn@')) {
-            if (useNextTemplate) {
-                execSync(nextYarnTemplate, { stdio: 'inherit' });
-            } else {
-                console.log(usePkgManagerMsg('yarn'));
-                execSync(yarnTemplate, { stdio: 'inherit' });
-            }
+        if (useNextTemplate) {
+            execSync(nextYarnTemplate, { stdio: 'inherit' });
         } else {
-            console.log(colors.gray('\n→ Cannot find yarn.'));
-            useNpm = true;
-
-            if (useNextTemplate) {
-                execSync(nextNpmTemplate, { stdio: 'inherit' });
-            } else {
-                console.log(usePkgManagerMsg('npm'));
-                execSync(npmTemplate, { stdio: 'inherit' });
-            }
+            console.log(usePkgManagerMsg('yarn'));
+            execSync(yarnTemplate, { stdio: 'inherit' });
         }
     } else {
         console.log(usePkgManagerMsg('npm'));
@@ -143,7 +138,9 @@ program
 
     try {
         console.log(
-            colors.gray('\n→ Installing dependencies & Tailwind CSS...')
+            colors.gray(
+                '\n→ Installing dependencies & Setting-up Tailwind CSS...'
+            )
         );
 
         let prefix = 'npm i';
@@ -164,7 +161,8 @@ program
         if (useNpm) console.log(colors.yellow('npm run dev'));
         else console.log(colors.yellow('yarn dev'));
     } catch (err) {
-        console.log(err);
+        console.error('An error occurred', err);
+        process.exit(1);
     }
 
     const projectDir = process.cwd();
@@ -211,6 +209,7 @@ program
             '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
         );
     } catch (err) {
-        console.error('Error occurred:', err);
+        console.error('An error occurred:', err);
+        process.exit(1);
     }
 })();
