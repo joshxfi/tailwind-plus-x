@@ -197,7 +197,9 @@ program
     };
 
     const tailwindConfig = {
-        files: `${projectDir}/tailwind.config.js`,
+        files: `${projectDir}/tailwind.config.${
+            useNextTemplate ? 'js' : 'cjs'
+        }`,
         from: /content: \[]/g,
         to: useTwConfig(),
     };
